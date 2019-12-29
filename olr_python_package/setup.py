@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="olr",
-    version="1.2.2",
+    version="1.3.2",
     author="Mathew Fok",
     author_email="mfok@stevens.edu",
     description="olr: Optimal Linear Regression",
