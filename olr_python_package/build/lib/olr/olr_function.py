@@ -27,11 +27,27 @@ summarylist = []
 
 def olr(dataset, responseName = None, predictorNames = None, adjr2 = "TRUE"):
 
+        if responseName is None and predictorNames is None: 
+
+                columnrange = len(list(dataset.columns.values))
+
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
+
         if adjr2 == ("TRUE") or adjr2 == ("True") or adjr2 == ("true"):
 
-                xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
 
-                ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+                ymod = [paste(responseName, "~") for i in xmod]
 
                 zmod = [i[0] for i in ymod]
 
@@ -47,9 +63,9 @@ def olr(dataset, responseName = None, predictorNames = None, adjr2 = "TRUE"):
 
         elif adjr2 == ("FALSE") or adjr2 == ("False") or adjr2 == ("false"):
 
-                xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
 
-                ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+                ymod = [paste(responseName, "~") for i in xmod]
 
                 zmod = [i[0] for i in ymod]
 
@@ -63,53 +79,31 @@ def olr(dataset, responseName = None, predictorNames = None, adjr2 = "TRUE"):
 
                 return(summarylist[output.index(maxoutput)])
 
-##not NULL not using the data set
 
-        if responseName != None and predictorNames != None:
-        
-                if adjr2 == ("TRUE") or adjr2 == ("True") or adjr2 == ("true"):
-
-                        xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                        ymod = [paste(responseName, "~") for i in xmod]
-
-                        zmod = [i[0] for i in ymod]
-
-                        mod = paste(zmod,xmod)
-
-                        output = [sm.ols(formula = i, data=dataset).fit().rsquared_adj for i in mod]
-
-                        maxoutput = max(output)
-        
-                        summarylist = list(enumerate([sm.ols(formula = i, data=dataset).fit().summary() for i in mod]))
-
-                        return(summarylist[output.index(maxoutput)])
-
-                elif adjr2 == ("FALSE") or adjr2 == ("False") or adjr2 == ("false"):
-
-                        xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                        ymod = [paste(responseName, "~") for i in xmod]
-
-                        zmod = [i[0] for i in ymod]
-
-                        mod = paste(zmod,xmod)
-
-                        output = [sm.ols(formula = i, data=dataset).fit().rsquared for i in mod]
-
-                        maxoutput = max(output)
-
-                        summarylist = list(enumerate([sm.ols(formula = i, data=dataset).fit().summary() for i in mod]))
-
-                        return(summarylist[output.index(maxoutput)])
 #to get the model you want in the list type olrmodels(dataset, responseName = None, predictorNames = None)[x], where x equals the number in the list of summaries/models
 def olrmodels(dataset, responseName = None, predictorNames = None):
+        
+        if responseName is None and predictorNames is None: 
+
+                columnrange = len(list(dataset.columns.values))
+
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
 
         print("To get the model you want in the list type olrmodels(dataset, responseName = None, predictorNames = None)[x], where x equals the number in the list of summaries/models")
 
-        xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+        xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
 
-        ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+        ymod = [paste(responseName, "~") for i in xmod]
 
         zmod = [i[0] for i in ymod]
   
@@ -119,25 +113,28 @@ def olrmodels(dataset, responseName = None, predictorNames = None):
 
         return(output)
 
-        if responseName != None and predictorNames != None:
-
-                xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                ymod = [paste(responseName, "~") for i in xmod]
-
-                zmod = [i[0] for i in ymod]
-
-                mod = paste(zmod,xmod)
-
-                output = list(enumerate([sm.ols(formula = i, data=dataset).fit().summary() for i in mod]))
-
-                return(output)
 
 def olrformulas(dataset, responseName = None, predictorNames = None):
+        
+        if responseName is None and predictorNames is None: 
 
-        xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                columnrange = len(list(dataset.columns.values))
 
-        ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
+
+        xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
+
+        ymod = [paste(responseName, "~") for i in xmod]
 
         zmod = [i[0] for i in ymod]
 
@@ -145,23 +142,30 @@ def olrformulas(dataset, responseName = None, predictorNames = None):
 
         return(mod)
 
-        if responseName != None and predictorNames != None:
-
-                xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                ymod = [paste(responseName, "~") for i in xmod]
-
-                zmod = [i[0] for i in ymod]
-
-                mod = paste(zmod,xmod)
 
 def olrformulasorder(dataset, responseName = None, predictorNames = None):
+        
+        if responseName is None and predictorNames is None: 
 
-        xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                columnrange = len(list(dataset.columns.values))
+
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
+
+        xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
 
         sortedxmod = sorted(xmod)
 
-        ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in sortedxmod]
+        ymod = [paste(responseName, "~") for i in sortedxmod]
 
         zmod = [i[0] for i in ymod]
 
@@ -169,27 +173,28 @@ def olrformulasorder(dataset, responseName = None, predictorNames = None):
 
         return(mod)
 
-        if responseName != None and predictorNames != None:
-
-                xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                sortedxmod = sorted(xmod)
-
-                ymod = [paste(responseName, "~") for i in sortedxmod]
-
-                zmod = [i[0] for i in ymod]
-
-                mod = paste(zmod,sortedxmod)
-
-                return(mod)
-                
-                
 
 def adjr2list(dataset, responseName = None, predictorNames = None):
+        
+        if responseName is None and predictorNames is None: 
 
-        xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                columnrange = len(list(dataset.columns.values))
 
-        ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
+
+        xmod = ["+".join(i) for i in range(1,columnrange) for i in list(combinations(predictorNames,i))]
+
+        ymod = [paste(responseName, "~") for i in xmod]
 
         zmod = [i[0] for i in ymod]
 
@@ -199,25 +204,28 @@ def adjr2list(dataset, responseName = None, predictorNames = None):
 
         return(output)
 
-        if responseName != None and predictorNames != None:
-
-                xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                ymod = [paste(responseName, "~") for i in xmod]
-
-                zmod = [i[0] for i in ymod]
-
-                mod = paste(zmod,xmod)
-
-                output = [sm.ols(formula = i, data=dataset).fit().rsquared_adj for i in mod]
-
-                return(output)
 
 def r2list(dataset, responseName = None, predictorNames = None):
+        
+        if responseName is None and predictorNames is None: 
 
-        xmod = ["+".join(i) for i in range(1,len(list(dataset.columns.values))+1) for i in list(combinations(dataset.iloc[:,1:len(list(dataset.columns.values))],i))]
+                columnrange = len(list(dataset.columns.values))
 
-        ymod = [paste(dataset[[dataset.columns.values[0]]], "~") for i in xmod]
+                predictorNames = dataset.iloc[:,1:len(list(dataset.columns.values))]
+
+                responseName = dataset[[dataset.columns.values[0]]]
+ 
+        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+
+                columnrange = len(list(predictorNames.columns.values))+1
+
+                predictorNames = predictorNames
+
+                responseName = responseName
+
+        xmod = ["+".join(i) for i in range(1,columnrange) for i in list(predictorNames,i))]
+
+        ymod = [paste(responseName, "~") for i in xmod]
 
         zmod = [i[0] for i in ymod]
 
@@ -226,17 +234,3 @@ def r2list(dataset, responseName = None, predictorNames = None):
         output = [sm.ols(formula = i, data=dataset).fit().rsquared for i in mod]
 
         return(output)
-
-        if responseName != None and predictorNames != None:
-
-                xmod = ["+".join(i) for i in range(1,len(list(predictorNames.columns.values))+1) for i in list(combinations(predictorNames,i))]
-
-                ymod = [paste(responseName, "~") for i in xmod]
-
-                zmod = [i[0] for i in ymod]
-
-                mod = paste(zmod,xmod)
-
-                output = [sm.ols(formula = i, data=dataset).fit().rsquared_adj for i in mod]
-
-                return(output)
