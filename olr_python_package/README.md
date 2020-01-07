@@ -1,7 +1,9 @@
 The olr function runs all the possible combinations of linear regressions with all of the
 dependent variables against the independent variable and returns the statistical summary
-of either the greatest adjusted R-squared or R-squared term. Adding an additional explanatory variable to the regression equation increases the R-squared or
-adjusted R-squared terms even if the variable is not 'significant'. Thus, adjusted R-squared was preferred, and this was developed in order to eliminate that conundrum.
+of either the greatest adjusted R-squared or R-squared term. R-squared increases 
+with the addition of an explanatory variable whether it is 'significant' or not, thus this was developed to eliminate that conundrum. 
+Adjusted R-squared is preferred to overcome this phenomenon, but each combination will still produce different results and this will
+return the best one.
 
 
 dataset = pd.read_csv('C:\Rstuff\olr\inst\extdata\oildata.csv') <br />
