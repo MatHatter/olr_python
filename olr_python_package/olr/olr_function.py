@@ -35,7 +35,7 @@ def olr(dataset, responseName = None, predictorNames = None, adjr2 = "TRUE"):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
@@ -91,7 +91,7 @@ def olrmodels(dataset, responseName = None, predictorNames = None):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
@@ -124,7 +124,7 @@ def olrformulas(dataset, responseName = None, predictorNames = None):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
@@ -153,7 +153,7 @@ def olrformulasorder(dataset, responseName = None, predictorNames = None):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
@@ -184,7 +184,7 @@ def adjr2list(dataset, responseName = None, predictorNames = None):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
@@ -215,7 +215,7 @@ def r2list(dataset, responseName = None, predictorNames = None):
 
                 responseName = dataset[[dataset.columns.values[0]]]
  
-        elif responseName is not None and predictorNames is not None: ##not NULL not using the data set
+        elif responseName is not None and predictorNames is not None: #not NULL not using the data set
 
                 columnrange = len(list(predictorNames.columns.values))+1
 
